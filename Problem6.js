@@ -38,3 +38,4 @@ var difference = function(num1,num2){
 };
 
 console.log(difference(generateSumOfSquaresList(100),generateSquareOfSumList(100)));
+//25164150
