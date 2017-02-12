@@ -25,10 +25,13 @@ The product of these numbers is 26 × 63 × 78 × 14 = 1788696.
 
 What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid? */
 var nested_array = [];
-var array = [];
+var largest_product = 0;
+var largest_list = [];
+
 
 var createArray = function(string){
   //Splits string by spaces and turns strings into integers
+  var array = [];
   array = string.split(" ");
   array = array.map(function(string){
     return parseInt(string);
@@ -36,6 +39,7 @@ var createArray = function(string){
 
   //Sets up a nested array that's 20 x 20
   for(var i=0; i < 20; i++){
+    //You have to create an empty list at nested_array[i] or else compiler won't understand nested_array[i][j]
     nested_array[i] = [];
     for(var j=0; j < 20; j++){
       nested_array[i][j] = array[(i*20) + j];
@@ -64,4 +68,34 @@ createArray("08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08 " +
 "20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54 " +
 "01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48");
 
-console.log(nested_array);
+var checkLeftRight = function(){
+  var product = 0;
+  for(var k = 0; k < 20; k++){
+    for(var i = 0; i <= (20 - 4); i++){
+      product = nested_array[k][i]*nested_array[k][i+1]*nested_array[k][i+2]*nested_array[k][i+3];
+      if(product > largest_product){
+        largest_product = product;
+        largest_list = [nested_array[k][i],nested_array[k][i+1],nested_array[k][i+2],nested_array[k][i+3]];
+      }
+    }
+  }
+}
+
+var checkUpDown = function(){
+  var product = 0;
+  for(var k = 0; k <= (20 - 4); k++){
+    for(var i = 0; i < 20; i++){
+      product = nested_array[k][i]*nested_array[k+1][i]*nested_array[k+2][i]*nested_array[k+3][i];
+      if(product > largest_product){
+        largest_product = product;
+        largest_list = [nested_array[k][i],nested_array[k+1][i],nested_array[k+2][i],nested_array[k+3][i]];
+      }
+    }
+  }
+}
+
+checkLeftRight();
+checkUpDown();
+
+console.log("THE LARGEST PRODUCT IS: " + largest_product);
+console.log("FROM THE NUMBERS: " + largest_list);
