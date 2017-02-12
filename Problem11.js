@@ -94,8 +94,44 @@ var checkUpDown = function(){
   }
 }
 
+var diagonal1 = function(){
+  var product = 0;
+  for(var k = 0; k <= (20-4); k++){
+    for(var i = 0; i <= (20-4); i++){
+      if(typeof nested_array[k] !== 'undefined'){
+        if((typeof nested_array[k][i] !== 'undefined') && (typeof nested_array[k+1][i+1] !== 'undefined') && (typeof nested_array[k+2][i+2] !== 'undefined') && (typeof nested_array[k+3][i+3] !== 'undefined')){
+          product = nested_array[k][i]*nested_array[k+1][i+1]*nested_array[k+2][i+2]*nested_array[k+3][i+3];
+          if(product > largest_product){
+            largest_product = product;
+            largest_list = [nested_array[k][i],nested_array[k+1][i+1],nested_array[k+2][i+2],nested_array[k+3][i+3]];
+          }
+        }
+      }
+    }
+  }
+}
+
+var diagonal2 = function(){
+  var product = 0;
+  for(var k = 3; k <= 20; k++){
+    for(var i = 0; i <= 20; i++){
+      if(typeof nested_array[k] !== 'undefined'){
+        if((typeof nested_array[k][i] !== 'undefined') && (typeof nested_array[k-1][i+1] !== 'undefined') && (typeof nested_array[k-2][i+2] !== 'undefined') && (typeof nested_array[k-3][i+3] !== 'undefined')){
+          product = nested_array[k][i]*nested_array[k-1][i+1]*nested_array[k-2][i+2]*nested_array[k-3][i+3];
+          if(product > largest_product){
+            largest_product = product;
+            largest_list = [nested_array[k][i],nested_array[k-1][i+1],nested_array[k-2][i+2],nested_array[k-3][i+3]];
+          }
+        }
+      }
+    }
+  }
+}
+
 checkLeftRight();
 checkUpDown();
+diagonal1();
+diagonal2();
 
 console.log("THE LARGEST PRODUCT IS: " + largest_product);
 console.log("FROM THE NUMBERS: " + largest_list);
